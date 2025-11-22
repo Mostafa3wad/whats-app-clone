@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "appTitle": "Voicers",
+  "email": "Email",
+  "password": "Password",
+  "login": "Log in",
+  "noConnection": "No internet connection",
+  "retry": "Retry",
+  "settings": "Settings"
+}

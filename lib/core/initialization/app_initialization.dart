@@ -1,0 +1,26 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whats_app_clone/core/bloc/app_bloc_observer.dart';
+import 'package:whats_app_clone/core/helpers/database_helper.dart';
+import 'package:whats_app_clone/core/logging/app_logger.dart';
+import 'package:whats_app_clone/core/service_locator/service_locator.dart';
+
+class AppInitialization {
+  final AppLogger appLogger;
+  final DatabaseHelper databaseHelper;
+
+  AppInitialization({required this.appLogger, required this.databaseHelper});
+
+  Future<void> initialize() async {
+    try {
+      initializeServiceLocator();
+      appLogger.initialize();
+      Bloc.observer = AppBlocObserver();
+      await databaseHelper.database;
+
+      appLogger.info('Application initialized successfully.');
+    } catch (error, stackTrace) {
+      appLogger.error('Application initialization failed.', error, stackTrace);
+      rethrow;
+    }
+  }
+}
