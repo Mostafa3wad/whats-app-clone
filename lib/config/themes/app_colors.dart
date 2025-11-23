@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/widgets.dart';
 
 class AppColors {
   // pr
@@ -9,4 +9,5 @@ class AppColors {
   static const Color secendry = Color(0xff9DCEFF);
 
   static const Color white = Color(0xFFFFFFFF);
+  static const Color gray = Color(0xFFABABAB);
 }

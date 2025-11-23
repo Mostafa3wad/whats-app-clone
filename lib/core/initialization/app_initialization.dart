@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whats_app_clone/core/bloc/app_bloc_observer.dart';
 import 'package:whats_app_clone/core/helpers/database_helper.dart';
@@ -22,5 +23,15 @@ class AppInitialization {
       appLogger.error('Application initialization failed.', error, stackTrace);
       rethrow;
     }
+    FlutterError.onError = (FlutterErrorDetails details) {
+      if (kDebugMode) {
+        FlutterError.presentError(details);
+      }
+      appLogger.error('FlutterError', details.exception, details.stack);
+    };
+    PlatformDispatcher.instance.onError = (Object error, StackTrace stack) {
+      appLogger.error('Uncaught (PlatformDispatcher)', error, stack);
+      return true;
+    };
   }
 }

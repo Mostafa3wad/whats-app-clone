@@ -6,7 +6,12 @@ class ThemeManager {
   final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier<ThemeMode>(
     ThemeMode.system,
   );
-  late ColorScheme lightColorScheme;
+  ColorScheme lightColorScheme = ColorScheme.fromSeed(
+    primary: AppColors.brandColor,
+    surface: AppColors.white,
+    seedColor: AppColors.brandColor,
+  );
+
   late ColorScheme darkColorScheme;
 
   ThemeManager({ColorScheme? lightDynamic, ColorScheme? darkDynamic}) {
@@ -46,6 +51,7 @@ class ThemeManager {
     useMaterial3: true,
     colorScheme: lightColorScheme,
     appBarTheme: AppBarTheme(
+      centerTitle: true,
       titleTextStyle: TextStyle(
         fontSize: 18,
         color: lightColorScheme.onSurface,
