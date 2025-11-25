@@ -1,12 +1,18 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:whats_app_clone/config/themes/text_styles.dart';
 import 'app_colors.dart';
 
 class ThemeManager {
   final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier<ThemeMode>(
     ThemeMode.system,
   );
-  late ColorScheme lightColorScheme;
+  ColorScheme lightColorScheme = ColorScheme.fromSeed(
+    primary: AppColors.brandColor,
+    surface: AppColors.white,
+    seedColor: AppColors.brandColor,
+  );
+
   late ColorScheme darkColorScheme;
 
   ThemeManager({ColorScheme? lightDynamic, ColorScheme? darkDynamic}) {
@@ -46,12 +52,9 @@ class ThemeManager {
     useMaterial3: true,
     colorScheme: lightColorScheme,
     appBarTheme: AppBarTheme(
-      titleTextStyle: TextStyle(
-        fontSize: 18,
-        color: lightColorScheme.onSurface,
-        fontWeight: FontWeight.bold,
-        fontFamily: 'Rubik',
-      ),
+      centerTitle: true,
+      backgroundColor: AppColors.grey,
+      titleTextStyle: AppStyles.appBarStyle,
     ),
     fontFamily: 'Rubik',
     bottomSheetTheme: BottomSheetThemeData(

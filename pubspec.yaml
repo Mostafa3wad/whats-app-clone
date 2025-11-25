@@ -47,6 +47,10 @@ dependencies:
   # Logging
   logger: ^2.5.0
 
+  # UI
+  flutter_screenutil: ^5.9.3
+  pinput: ^6.0.1
+  
 dev_dependencies:
   # Code Generation
   build_runner: ^2.4.14
@@ -60,3 +64,5 @@ flutter:
   uses-material-design: true
   generate: true
 
+  assets:
+    - assets/images/
