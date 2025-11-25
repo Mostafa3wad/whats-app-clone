@@ -1,5 +1,6 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:whats_app_clone/config/themes/text_styles.dart';
 import 'app_colors.dart';
 
 class ThemeManager {
@@ -52,12 +53,8 @@ class ThemeManager {
     colorScheme: lightColorScheme,
     appBarTheme: AppBarTheme(
       centerTitle: true,
-      titleTextStyle: TextStyle(
-        fontSize: 18,
-        color: lightColorScheme.onSurface,
-        fontWeight: FontWeight.bold,
-        fontFamily: 'Rubik',
-      ),
+      backgroundColor: AppColors.grey,
+      titleTextStyle: AppStyles.appBarStyle,
     ),
     fontFamily: 'Rubik',
     bottomSheetTheme: BottomSheetThemeData(

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:whats_app_clone/features/home/presentation/pages/home_page.dart';
 import 'package:whats_app_clone/features/login/presentation/pages/login_page.dart';
+import 'package:whats_app_clone/features/login/presentation/pages/otp_page.dart';
 
 import '../../core/constants/paths/route_names.dart';
 
@@ -8,6 +10,17 @@ Route<dynamic> generateRoutes(RouteSettings settings) {
     case RouteNames.login:
       return CupertinoPageRoute<dynamic>(
         builder: (BuildContext context) => const LoginPage(),
+      );
+
+    case RouteNames.otp:
+      final String phoneNumber = settings.arguments as String;
+      return CupertinoPageRoute<dynamic>(
+        builder: (BuildContext context) => OtpPage(phoneNumber: phoneNumber),
+      );
+
+    case RouteNames.home:
+      return CupertinoPageRoute<dynamic>(
+        builder: (BuildContext context) => const HomePage(),
       );
 
     default:

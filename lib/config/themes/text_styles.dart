@@ -11,12 +11,17 @@ class AppStyles {
     fontWeight: FontWeight.bold,
   );
   static final TextStyle h1Blod = TextStyle(
-    fontSize: 28.sp,
+    fontSize: 18.sp,
     fontWeight: FontWeight.bold,
   );
 
   static final TextStyle b1Blod = TextStyle(
-    fontSize: 12.sp,
-    fontWeight: FontWeight.w500,
+    fontSize: 14.sp,
+   );
+
+  static final TextStyle appBarStyle = const TextStyle(
+    fontSize: 18,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
   );
 }
