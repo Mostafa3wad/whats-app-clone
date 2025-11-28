@@ -50,6 +50,7 @@ dependencies:
   # UI
   flutter_screenutil: ^5.9.3
   pinput: ^6.0.1
+  flutter_slidable: ^3.1.1
   
 dev_dependencies:
   # Code Generation
@@ -59,6 +60,7 @@ dev_dependencies:
   flutter_lints: ^6.0.0
   flutter_test:
     sdk: flutter
+  test: ^1.26.2
 
 flutter:
   uses-material-design: true
