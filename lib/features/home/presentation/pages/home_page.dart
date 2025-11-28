@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:whats_app_clone/config/themes/app_colors.dart';
+import 'package:whats_app_clone/features/chat/presentation/cubit/chat_cubit.dart';
+import 'package:whats_app_clone/features/chat/presentation/pages/chat_page.dart';
 import 'package:whats_app_clone/features/home/presentation/widgets/bottom_nav_bar.dart';
 import 'package:whats_app_clone/features/status/presentation/pages/status_page.dart';
 
@@ -21,8 +24,11 @@ class _HomePageState extends State<HomePage> {
     _pageController = PageController(initialPage: _currentIndex);
     bottomBarPages = <Widget>[
       const StatusPage(),
-      const Scaffold(body: Center(child: Text('Progress'))),
-      const Scaffold(body: Center(child: Text('Browse Books'))),
+      BlocProvider<ChatCubit>(
+        create: (BuildContext context) => ChatCubit(),
+        child: const ChatPage(),
+      ),
+      const Scaffold(body: Center(child: Text('Settings'))),
     ];
   }
 

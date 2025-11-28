@@ -4,7 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whats_app_clone/config/routing/app_routes.dart';
 import 'package:whats_app_clone/config/themes/theme_manager.dart';
-import 'package:whats_app_clone/features/splash/presentation/pages/splash_page.dart';
+import 'package:whats_app_clone/features/home/presentation/pages/home_page.dart';
 
 class WhatsApp extends StatelessWidget {
   const WhatsApp({super.key});
@@ -43,7 +43,7 @@ class WhatsApp extends StatelessWidget {
                       ],
                   supportedLocales: const <Locale>[Locale('en')],
                   locale: const Locale('en'),
-                  home: const SplashPage(),
+                  home: const HomePage(),
                 ),
               ),
             );
