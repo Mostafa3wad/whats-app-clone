@@ -5,4 +5,5 @@ class RouteNames {
   static const String settings = '/settings';
   static const String home = '/home';
   static const String chat = '/chat';
+  static const String chatDetails = '/chat_details';
 }

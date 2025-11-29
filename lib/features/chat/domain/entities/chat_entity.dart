@@ -1,10 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-enum MessageType {
-  text,
-  voice,
-  photo,
-}
+enum MessageType { text, voice, photo }
 
 class ChatEntity extends Equatable {
   final String id;
@@ -29,15 +25,13 @@ class ChatEntity extends Equatable {
 
   @override
   List<Object?> get props => <Object?>[
-        id,
-        name,
-        lastMessage,
-        timestamp,
-        avatarUrl,
-        messageType,
-        isRead,
-        voiceDuration,
-      ];
+    id,
+    name,
+    lastMessage,
+    timestamp,
+    avatarUrl,
+    messageType,
+    isRead,
+    voiceDuration,
+  ];
 }
-
-

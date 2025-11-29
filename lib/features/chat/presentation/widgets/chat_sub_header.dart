@@ -35,4 +35,3 @@ class ChatSubHeader extends StatelessWidget {
     );
   }
 }
-

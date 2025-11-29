@@ -67,8 +67,7 @@ class ChatCubit extends Cubit<ChatState> {
       ChatEntity(
         id: '7',
         name: 'Maisy Humphrey',
-        lastMessage:
-            'Welcome, to make design process faster, look at Pixsellz',
+        lastMessage: 'Welcome, to make design process faster, look at Pixsellz',
         timestamp: DateTime(2019, 8, 20),
         avatarUrl: '',
         messageType: MessageType.text,
@@ -91,17 +90,23 @@ class ChatCubit extends Cubit<ChatState> {
   void toggleEditMode() {
     if (state is ChatLoaded) {
       final ChatLoaded currentState = state as ChatLoaded;
-      emit(currentState.copyWith(
-        isEditMode: !currentState.isEditMode,
-        selectedChatIds: currentState.isEditMode ? <String>{} : currentState.selectedChatIds,
-      ));
+      emit(
+        currentState.copyWith(
+          isEditMode: !currentState.isEditMode,
+          selectedChatIds: currentState.isEditMode
+              ? <String>{}
+              : currentState.selectedChatIds,
+        ),
+      );
     }
   }
 
   void toggleChatSelection(String chatId) {
     if (state is ChatLoaded) {
       final ChatLoaded currentState = state as ChatLoaded;
-      final Set<String> selectedIds = Set<String>.from(currentState.selectedChatIds);
+      final Set<String> selectedIds = Set<String>.from(
+        currentState.selectedChatIds,
+      );
       if (selectedIds.contains(chatId)) {
         selectedIds.remove(chatId);
       } else {
@@ -114,9 +119,13 @@ class ChatCubit extends Cubit<ChatState> {
   void selectAllChats() {
     if (state is ChatLoaded) {
       final ChatLoaded currentState = state as ChatLoaded;
-      emit(currentState.copyWith(
-        selectedChatIds: currentState.chats.map((ChatEntity chat) => chat.id).toSet(),
-      ));
+      emit(
+        currentState.copyWith(
+          selectedChatIds: currentState.chats
+              .map((ChatEntity chat) => chat.id)
+              .toSet(),
+        ),
+      );
     }
   }
 
@@ -130,8 +139,9 @@ class ChatCubit extends Cubit<ChatState> {
   void archiveChat(String chatId) {
     if (state is ChatLoaded) {
       final ChatLoaded currentState = state as ChatLoaded;
-      final List<ChatEntity> updatedChats =
-          currentState.chats.where((ChatEntity chat) => chat.id != chatId).toList();
+      final List<ChatEntity> updatedChats = currentState.chats
+          .where((ChatEntity chat) => chat.id != chatId)
+          .toList();
       emit(currentState.copyWith(chats: updatedChats));
     }
   }
@@ -140,13 +150,18 @@ class ChatCubit extends Cubit<ChatState> {
     if (state is ChatLoaded) {
       final ChatLoaded currentState = state as ChatLoaded;
       final List<ChatEntity> updatedChats = currentState.chats
-          .where((ChatEntity chat) => !currentState.selectedChatIds.contains(chat.id))
+          .where(
+            (ChatEntity chat) =>
+                !currentState.selectedChatIds.contains(chat.id),
+          )
           .toList();
-      emit(currentState.copyWith(
-        chats: updatedChats,
-        selectedChatIds: <String>{},
-        isEditMode: false,
-      ));
+      emit(
+        currentState.copyWith(
+          chats: updatedChats,
+          selectedChatIds: <String>{},
+          isEditMode: false,
+        ),
+      );
     }
   }
 
@@ -154,20 +169,27 @@ class ChatCubit extends Cubit<ChatState> {
     if (state is ChatLoaded) {
       final ChatLoaded currentState = state as ChatLoaded;
       final List<ChatEntity> updatedChats = currentState.chats
-          .where((ChatEntity chat) => !currentState.selectedChatIds.contains(chat.id))
+          .where(
+            (ChatEntity chat) =>
+                !currentState.selectedChatIds.contains(chat.id),
+          )
           .toList();
-      emit(currentState.copyWith(
-        chats: updatedChats,
-        selectedChatIds: <String>{},
-        isEditMode: false,
-      ));
+      emit(
+        currentState.copyWith(
+          chats: updatedChats,
+          selectedChatIds: <String>{},
+          isEditMode: false,
+        ),
+      );
     }
   }
 
   void markAllAsRead() {
     if (state is ChatLoaded) {
       final ChatLoaded currentState = state as ChatLoaded;
-      final List<ChatEntity> updatedChats = currentState.chats.map((ChatEntity chat) {
+      final List<ChatEntity> updatedChats = currentState.chats.map((
+        ChatEntity chat,
+      ) {
         return ChatEntity(
           id: chat.id,
           name: chat.name,

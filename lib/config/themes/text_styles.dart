@@ -15,9 +15,7 @@ class AppStyles {
     fontWeight: FontWeight.bold,
   );
 
-  static final TextStyle b1Blod = TextStyle(
-    fontSize: 14.sp,
-   );
+  static final TextStyle b1Blod = TextStyle(fontSize: 14.sp);
 
   static final TextStyle appBarStyle = const TextStyle(
     fontSize: 18,

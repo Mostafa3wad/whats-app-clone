@@ -14,7 +14,7 @@ class CustomEmptyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 30, left: 30,),
+      padding: const EdgeInsets.only(right: 30, left: 30),
       child: Center(
         child: SingleChildScrollView(
           child: Column(

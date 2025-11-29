@@ -14,7 +14,6 @@ class EditModeBottomBar extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-
         return Container(
           color: Colors.white,
           padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -69,4 +68,3 @@ class EditModeBottomBar extends StatelessWidget {
     );
   }
 }
-

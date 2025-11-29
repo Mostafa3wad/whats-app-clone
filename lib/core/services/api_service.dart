@@ -6,17 +6,11 @@ class ApiService {
   final DioClient dioClient;
   final AppLogger _appLogger = AppLogger();
 
-  ApiService({
-    required this.dioClient,
-  });
+  ApiService({required this.dioClient});
 
-  Future<dynamic> get({
-    required String endpoint,
-  }) async {
+  Future<dynamic> get({required String endpoint}) async {
     try {
-      final Response<dynamic> response = await dioClient.dio.get(
-        endpoint,
-      );
+      final Response<dynamic> response = await dioClient.dio.get(endpoint);
       return response.data;
     } catch (e) {
       _appLogger.error('ERROR => $e');
@@ -56,13 +50,9 @@ class ApiService {
     }
   }
 
-  Future<dynamic> delete({
-    required String endpoint,
-  }) async {
+  Future<dynamic> delete({required String endpoint}) async {
     try {
-      final Response<dynamic> response = await dioClient.dio.delete(
-        endpoint,
-      );
+      final Response<dynamic> response = await dioClient.dio.delete(endpoint);
       return response.data;
     } catch (e) {
       _appLogger.error('ERROR => $e');

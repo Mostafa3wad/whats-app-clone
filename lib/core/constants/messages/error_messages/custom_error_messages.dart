@@ -1,3 +1,1 @@
-class CustomErrorMessages {
-
-}
+class CustomErrorMessages {}

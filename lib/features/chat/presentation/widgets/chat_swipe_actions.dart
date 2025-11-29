@@ -5,11 +5,7 @@ class ChatSwipeActions extends StatelessWidget {
   final VoidCallback? onMoreTap;
   final VoidCallback? onArchiveTap;
 
-  const ChatSwipeActions({
-    super.key,
-    this.onMoreTap,
-    this.onArchiveTap,
-  });
+  const ChatSwipeActions({super.key, this.onMoreTap, this.onArchiveTap});
 
   @override
   Widget build(BuildContext context) {
@@ -56,11 +52,7 @@ class ChatSwipeActions extends StatelessWidget {
               color: color.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(
-              icon,
-              color: color,
-              size: 24,
-            ),
+            child: Icon(icon, color: color, size: 24),
           ),
           const SizedBox(height: 4),
           Text(
@@ -76,4 +68,3 @@ class ChatSwipeActions extends StatelessWidget {
     );
   }
 }
-
