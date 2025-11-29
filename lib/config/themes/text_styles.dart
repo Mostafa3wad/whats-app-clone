@@ -22,4 +22,30 @@ class AppStyles {
     color: Colors.black,
     fontWeight: FontWeight.bold,
   );
+
+  static const TextStyle settingsProfileName = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+    color: Colors.black,
+  );
+
+  static const TextStyle settingsProfileSubtitle = TextStyle(
+    fontSize: 14,
+    color: Color(0xFF8E8E93),
+  );
+
+  static const TextStyle settingsItemTitle = TextStyle(
+    fontSize: 16,
+    color: Colors.black,
+  );
+
+  static const TextStyle settingsItemSubtitle = TextStyle(
+    fontSize: 13,
+    color: Color(0xFF8E8E93),
+  );
+
+  static const TextStyle settingsFooter = TextStyle(
+    fontSize: 13,
+    color: Color(0xFF8E8E93),
+  );
 }
