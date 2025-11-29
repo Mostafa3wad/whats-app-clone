@@ -4,6 +4,7 @@ import 'package:whats_app_clone/config/themes/app_colors.dart';
 import 'package:whats_app_clone/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:whats_app_clone/features/chat/presentation/pages/chat_page.dart';
 import 'package:whats_app_clone/features/home/presentation/widgets/bottom_nav_bar.dart';
+import 'package:whats_app_clone/features/settings/presentation/pages/settings_page.dart';
 import 'package:whats_app_clone/features/status/presentation/pages/status_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
         create: (BuildContext context) => ChatCubit(),
         child: const ChatPage(),
       ),
-      const Scaffold(body: Center(child: Text('Settings'))),
+      const SettingsPage(),
     ];
   }
 

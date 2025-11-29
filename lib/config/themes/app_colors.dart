@@ -14,4 +14,11 @@ class AppColors {
   static const Color grey3 = Color(0xFFC6C6CC);
 
   static const Color error = Color(0xFFFF3B30);
+
+  // Settings icon colors
+  static const Color iconYellow = Color(0xFFFFCC00);
+  static const Color iconGreen = Color(0xFF34C759);
+  static const Color iconBlue = Color(0xFF007AFF);
+  static const Color iconRed = Color(0xFFFF3B30);
+  static const Color iconPink = Color(0xFFFF2D55);
 }
