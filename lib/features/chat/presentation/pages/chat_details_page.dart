@@ -24,13 +24,17 @@ class ChatDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: ChatDetailsAppbar(arg: arg),
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Image.asset(AppAssets.backgroundChat, fit: BoxFit.cover),
-          Column(
+    return Stack(
+      children: [
+        // Background image - fixed and doesn't resize
+        Positioned.fill(
+          child: Image.asset(AppAssets.backgroundChat, fit: BoxFit.cover),
+        ),
+        Scaffold(
+          backgroundColor: Colors.transparent,
+          // resizeToAvoidBottomInset: false,
+          appBar: ChatDetailsAppbar(arg: arg),
+          body: Column(
             children: <Widget>[
               Expanded(
                 child: BlocBuilder<ChatDetailsCubit, ChatDetailsState>(
@@ -53,8 +57,8 @@ class ChatDetailsPage extends StatelessWidget {
               ),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
