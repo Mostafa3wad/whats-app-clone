@@ -30,26 +30,15 @@ class DatabaseHelper {
     );
   }
 
-  Future<void> _onCreate(
-    Database db,
-    int version,
-  ) async {}
+  Future<void> _onCreate(Database db, int version) async {}
 
-  Future<void> _onDowngrade(
-    Database db,
-    int oldVersion,
-    int newVersion,
-  ) async {
-    await db.execute(
-      'DROP TABLE IF EXISTS Table_Name',
-    );
+  Future<void> _onDowngrade(Database db, int oldVersion, int newVersion) async {
+    await db.execute('DROP TABLE IF EXISTS Table_Name');
 
     await _onCreate(db, newVersion);
   }
 
-  Future<void> _onOpen(
-    Database db,
-  ) async {
+  Future<void> _onOpen(Database db) async {
     logger.i('database_name OPENED');
   }
 
@@ -70,10 +59,7 @@ class DatabaseHelper {
     required List<Map<String, dynamic>> row,
   }) async {
     final Database db = await database;
-    return await db.rawInsert(
-      tableName,
-      row,
-    );
+    return await db.rawInsert(tableName, row);
   }
 
   Future<List<Map<String, dynamic>>> queryAll({
@@ -82,11 +68,7 @@ class DatabaseHelper {
     List<Object?>? whereArgs,
   }) async {
     final Database db = await database;
-    return await db.query(
-      tableName,
-      where: where,
-      whereArgs: whereArgs,
-    );
+    return await db.query(tableName, where: where, whereArgs: whereArgs);
   }
 
   Future<List<Map<String, dynamic>>> querySingleRow({
@@ -95,16 +77,10 @@ class DatabaseHelper {
     required List<Object?>? whereArgs,
   }) async {
     final Database db = await database;
-    return await db.query(
-      tableName,
-      where: where,
-      whereArgs: whereArgs,
-    );
+    return await db.query(tableName, where: where, whereArgs: whereArgs);
   }
 
-  Future<int> queryRowCount({
-    required String tableName,
-  }) async {
+  Future<int> queryRowCount({required String tableName}) async {
     final Database db = await database;
     final List<Map<String, Object?>> results = await db.rawQuery(
       'SELECT COUNT(*) FROM $tableName',
@@ -134,10 +110,6 @@ class DatabaseHelper {
     required List<Object?>? whereArgs,
   }) async {
     final Database db = await database;
-    return await db.delete(
-      tableName,
-      where: where,
-      whereArgs: whereArgs,
-    );
+    return await db.delete(tableName, where: where, whereArgs: whereArgs);
   }
 }

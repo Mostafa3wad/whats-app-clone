@@ -48,5 +48,3 @@ class ChatConstants {
     color: chatTextColor,
   );
 }
-
-

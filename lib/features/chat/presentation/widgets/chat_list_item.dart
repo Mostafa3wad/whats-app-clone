@@ -4,10 +4,12 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:whats_app_clone/config/themes/app_colors.dart';
 import 'package:whats_app_clone/core/constants/paths/app_assets.dart';
+import 'package:whats_app_clone/core/constants/paths/route_names.dart';
 import 'package:whats_app_clone/features/chat/domain/entities/chat_entity.dart';
 import 'package:whats_app_clone/features/chat/presentation/constants/chat_constants.dart';
 import 'package:whats_app_clone/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:whats_app_clone/features/chat/presentation/widgets/chat_action_sheet.dart';
+import 'package:whats_app_clone/features/chat/presentation/pages/chat_details_page.dart';
 
 class ChatListItem extends StatelessWidget {
   final ChatEntity chat;
@@ -75,7 +77,15 @@ class ChatListItem extends StatelessWidget {
             if (isEditMode) {
               context.read<ChatCubit>().toggleChatSelection(chat.id);
             } else {
-              // Navigate to chat detail
+              // Navigate to chat details page
+              Navigator.pushNamed(
+                context,
+                RouteNames.chatDetails,
+                arguments: ChatDetailsArg(
+                  chatId: chat.id,
+                  contactName: chat.name,
+                ),
+              );
             }
           },
           onLongPress: () {

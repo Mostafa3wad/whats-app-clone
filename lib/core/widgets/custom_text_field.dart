@@ -73,9 +73,7 @@ class CustomTextField extends StatelessWidget {
         prefixIcon: prefixIcon,
         filled: true,
         hintText: hintText,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20),
-        ),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(20)),
         errorText: errorText,
         suffixIcon: suffixIconPath != null
             ? InkWell(
@@ -84,9 +82,7 @@ class CustomTextField extends StatelessWidget {
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
-                  child: SvgPicture.asset(
-                    suffixIconPath!,
-                  ),
+                  child: SvgPicture.asset(suffixIconPath!),
                 ),
               )
             : null,

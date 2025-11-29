@@ -12,16 +12,11 @@ extension Dialog on BuildContext {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) => AlertDialog(
-        title: Text(
-          title,
-          textAlign: TextAlign.start,
-        ),
+        title: Text(title, textAlign: TextAlign.start),
         content: Text(
           content,
           textAlign: TextAlign.start,
-          style: const TextStyle(
-            height: 1.5,
-          ),
+          style: const TextStyle(height: 1.5),
         ),
         actions: <Widget>[
           OutlinedButton(
@@ -31,9 +26,7 @@ extension Dialog on BuildContext {
           FilledButton(
             onPressed: doneOnPress,
             style: ButtonStyle(
-              backgroundColor: WidgetStateProperty.all(
-                doneColor,
-              ),
+              backgroundColor: WidgetStateProperty.all(doneColor),
             ),
             child: Text(doneTitle),
           ),

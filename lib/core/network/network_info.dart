@@ -12,25 +12,18 @@ class NetworkInfoImpl implements NetworkInfo {
   final Connectivity connectivity;
   final AppLogger _appLogger = AppLogger();
 
-  NetworkInfoImpl({
-    required this.connectivity,
-  });
+  NetworkInfoImpl({required this.connectivity});
 
   @override
   Future<Either<Failure, bool>> get isConnected async {
     try {
-      final List<ConnectivityResult> connectivityResult =
-          await connectivity.checkConnectivity();
-      final bool isConnected = connectivityResult !=
-          <ConnectivityResult>[
-            ConnectivityResult.none,
-          ];
+      final List<ConnectivityResult> connectivityResult = await connectivity
+          .checkConnectivity();
+      final bool isConnected =
+          connectivityResult != <ConnectivityResult>[ConnectivityResult.none];
       return Right<Failure, bool>(isConnected);
     } catch (e) {
-      _appLogger.error(
-        'Failed to check network connectivity',
-        e,
-      );
+      _appLogger.error('Failed to check network connectivity', e);
       throw NetworkException(
         message: 'Failed to check network connectivity: $e',
       );

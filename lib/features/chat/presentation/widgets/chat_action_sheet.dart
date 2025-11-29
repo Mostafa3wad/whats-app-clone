@@ -25,9 +25,7 @@ class ChatActionSheet extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(14),
-        ),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(14)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -126,5 +124,3 @@ class ChatActionSheet extends StatelessWidget {
     );
   }
 }
-
-
