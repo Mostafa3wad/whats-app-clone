@@ -1,10 +1,13 @@
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:whats_app_clone/config/routing/app_routes.dart';
 import 'package:whats_app_clone/config/themes/theme_manager.dart';
-import 'package:whats_app_clone/features/home/presentation/pages/home_page.dart';
+import 'package:whats_app_clone/core/service_locator/service_locator.dart';
+import 'package:whats_app_clone/features/login/presentation/cubit/login_cubit.dart';
+import 'package:whats_app_clone/features/splash/presentation/pages/splash_page.dart';
 
 class WhatsApp extends StatelessWidget {
   const WhatsApp({super.key});
@@ -29,21 +32,28 @@ class WhatsApp extends StatelessWidget {
                 designSize: const Size(375, 812),
                 minTextAdapt: true,
                 splitScreenMode: true,
-                child: MaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  theme: themeManager.lightTheme,
-                  darkTheme: themeManager.darkTheme,
-                  themeMode: value,
-                  onGenerateRoute: generateRoutes,
-                  localizationsDelegates:
-                      const <LocalizationsDelegate<dynamic>>[
-                        GlobalCupertinoLocalizations.delegate,
-                        GlobalMaterialLocalizations.delegate,
-                        GlobalWidgetsLocalizations.delegate,
-                      ],
-                  supportedLocales: const <Locale>[Locale('en')],
-                  locale: const Locale('en'),
-                  home: const HomePage(),
+                child: MultiBlocProvider(
+                  providers: <BlocProvider<dynamic>>[
+                    BlocProvider<LoginCubit>(
+                      create: (BuildContext context) => sl<LoginCubit>(),
+                    ),
+                  ],
+                  child: MaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    theme: themeManager.lightTheme,
+                    darkTheme: themeManager.darkTheme,
+                    themeMode: value,
+                    onGenerateRoute: generateRoutes,
+                    localizationsDelegates:
+                        const <LocalizationsDelegate<dynamic>>[
+                          GlobalCupertinoLocalizations.delegate,
+                          GlobalMaterialLocalizations.delegate,
+                          GlobalWidgetsLocalizations.delegate,
+                        ],
+                    supportedLocales: const <Locale>[Locale('en')],
+                    locale: const Locale('en'),
+                    home: const SplashPage(),
+                  ),
                 ),
               ),
             );

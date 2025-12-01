@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pinput/pinput.dart';
-import 'package:whats_app_clone/core/constants/paths/route_names.dart';
 
 class OtpTextField extends StatelessWidget {
-  const OtpTextField({super.key, required this.controller});
-
+  const OtpTextField({
+    super.key,
+    required this.controller,
+    required this.onCompleted,
+  });
+  final ValueChanged<String>? onCompleted;
   final TextEditingController controller;
 
   @override
@@ -29,13 +32,7 @@ class OtpTextField extends StatelessWidget {
           }
           return const SizedBox(width: 12);
         },
-        onCompleted: (String value) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            RouteNames.home,
-            (Route<dynamic> route) => false,
-          );
-        },
+        onCompleted: onCompleted,
       ),
     );
   }
