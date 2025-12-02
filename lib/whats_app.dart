@@ -32,6 +32,7 @@ class WhatsApp extends StatelessWidget {
                 designSize: const Size(375, 812),
                 minTextAdapt: true,
                 splitScreenMode: true,
+
                 child: MultiBlocProvider(
                   providers: <BlocProvider<dynamic>>[
                     BlocProvider<LoginCubit>(

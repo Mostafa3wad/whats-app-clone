@@ -170,6 +170,6 @@ Failure handleExceptions(Exception exception) {
   } else if (exception is RateLimitExceededException) {
     return RateLimitExceededFailure(message: exception.message);
   } else {
-    return UnexpectedFailure();
+    return const UnexpectedFailure();
   }
 }

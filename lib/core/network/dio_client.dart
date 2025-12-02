@@ -114,4 +114,16 @@ class DioClient {
       rethrow;
     }
   }
+
+  Future _refreshToken(String refreshToken) async {
+    try {
+      final Response<dynamic> response = await _dio.post(
+        ApiEndpoints.refreshToken,
+        data: <String, dynamic>{'refresh': refreshToken},
+      );
+      return response;
+    } catch (e) {
+      rethrow;
+    }
+  }
 }
