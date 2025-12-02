@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:whats_app_clone/config/themes/text_styles.dart';
 import 'package:whats_app_clone/features/chat/domain/entities/chat_entity.dart';
-import 'package:whats_app_clone/features/chat/presentation/constants/chat_constants.dart';
 import 'package:whats_app_clone/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:whats_app_clone/features/chat/presentation/widgets/chat_app_bar.dart';
 import 'package:whats_app_clone/features/chat/presentation/widgets/chat_list_item.dart';
@@ -14,7 +14,6 @@ class ChatPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ChatConstants.chatBackgroundColor,
       appBar: const ChatAppBar(),
       body: Column(
         children: <Widget>[
@@ -27,7 +26,7 @@ class ChatPage extends StatelessWidget {
                     return const Center(
                       child: Text(
                         'No chats',
-                        style: ChatConstants.chatMessageStyle,
+                        style: AppStyles.chatMessageStyle,
                       ),
                     );
                   }

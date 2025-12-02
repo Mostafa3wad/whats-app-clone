@@ -58,7 +58,7 @@ class SettingsPage extends StatelessWidget {
             children: <Widget>[
               SettingsItem(
                 icon: Icons.key,
-                iconColor: AppColors.iconBlue,
+                iconColor: AppColors.brandColor,
                 title: 'Account',
                 onTap: () {
                   // TODO: Navigate to account settings
@@ -74,7 +74,7 @@ class SettingsPage extends StatelessWidget {
               ),
               SettingsItem(
                 icon: Icons.notifications,
-                iconColor: AppColors.iconRed,
+                iconColor: AppColors.error,
                 title: 'Notifications',
                 onTap: () {
                   // TODO: Navigate to notifications settings
@@ -97,7 +97,7 @@ class SettingsPage extends StatelessWidget {
             children: <Widget>[
               SettingsItem(
                 icon: Icons.info,
-                iconColor: AppColors.iconBlue,
+                iconColor: AppColors.brandColor,
                 title: 'Help',
                 onTap: () {
                   // TODO: Navigate to help
@@ -121,7 +121,7 @@ class SettingsPage extends StatelessWidget {
             child: Center(
               child: Text(
                 'WhatsApp clone from Mostafa',
-                style: AppStyles.settingsFooter,
+                style: AppStyles.settingsItemSubtitle,
               ),
             ),
           ),

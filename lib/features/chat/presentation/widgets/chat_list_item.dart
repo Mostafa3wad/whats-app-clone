@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:whats_app_clone/config/themes/app_colors.dart';
+import 'package:whats_app_clone/config/themes/text_styles.dart';
 import 'package:whats_app_clone/core/constants/paths/app_assets.dart';
 import 'package:whats_app_clone/core/constants/paths/route_names.dart';
 import 'package:whats_app_clone/features/chat/domain/entities/chat_entity.dart';
-import 'package:whats_app_clone/features/chat/presentation/constants/chat_constants.dart';
 import 'package:whats_app_clone/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:whats_app_clone/features/chat/presentation/widgets/chat_action_sheet.dart';
 import 'package:whats_app_clone/features/chat/presentation/pages/chat_details_page.dart';
@@ -30,7 +30,7 @@ class ChatListItem extends StatelessWidget {
             const SizedBox(width: 4),
             Text(
               chat.voiceDuration ?? chat.lastMessage,
-              style: ChatConstants.chatMessageStyle,
+              style: AppStyles.chatMessageStyle,
             ),
           ],
         );
@@ -39,11 +39,11 @@ class ChatListItem extends StatelessWidget {
           children: <Widget>[
             const Icon(
               Icons.camera_alt,
-              color: ChatConstants.chatSecondaryTextColor,
+              color: AppColors.secondaryText,
               size: 16,
             ),
             const SizedBox(width: 4),
-            Text(chat.lastMessage, style: ChatConstants.chatMessageStyle),
+            Text(chat.lastMessage, style: AppStyles.chatMessageStyle),
           ],
         );
       case MessageType.text:
@@ -56,7 +56,7 @@ class ChatListItem extends StatelessWidget {
             Expanded(
               child: Text(
                 chat.lastMessage,
-                style: ChatConstants.chatMessageStyle,
+                style: AppStyles.chatMessageStyle,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -95,30 +95,25 @@ class ChatListItem extends StatelessWidget {
             }
           },
           child: Container(
-            height: ChatConstants.chatItemHeight,
-            padding: const EdgeInsets.symmetric(
-              horizontal: ChatConstants.chatItemPadding,
-            ),
+            height: 72,
+            padding: const EdgeInsets.symmetric(horizontal: 16),
             decoration: const BoxDecoration(
               border: Border(
-                bottom: BorderSide(
-                  color: ChatConstants.chatDividerColor,
-                  width: 0.5,
-                ),
+                bottom: BorderSide(color: AppColors.grey3, width: 0.5),
               ),
             ),
             child: Row(
               children: <Widget>[
                 if (isEditMode) ...<Widget>[
                   Container(
-                    width: ChatConstants.selectionCircleSize,
-                    height: ChatConstants.selectionCircleSize,
+                    width: 24.0,
+                    height: 24.0,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       border: Border.all(
                         color: isSelected
                             ? AppColors.brandColor
-                            : ChatConstants.chatDividerColor,
+                            : AppColors.grey3,
                         width: 2,
                       ),
                       color: isSelected
@@ -132,8 +127,8 @@ class ChatListItem extends StatelessWidget {
                   const SizedBox(width: 12),
                 ],
                 CircleAvatar(
-                  radius: ChatConstants.avatarSize / 2,
-                  backgroundColor: ChatConstants.chatDividerColor,
+                  radius: 28,
+                  backgroundColor: AppColors.grey3,
                   child: chat.avatarUrl.isNotEmpty
                       ? ClipOval(
                           child: Image.network(
@@ -159,7 +154,7 @@ class ChatListItem extends StatelessWidget {
                     children: <Widget>[
                       Text(
                         chat.name,
-                        style: ChatConstants.chatNameStyle,
+                        style: AppStyles.chatNameStyle,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -175,13 +170,13 @@ class ChatListItem extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       _formatTimestamp(chat.timestamp),
-                      style: ChatConstants.chatTimestampStyle,
+                      style: AppStyles.chatMessageStyle,
                     ),
                     if (!isEditMode) ...<Widget>[
                       const SizedBox(height: 4),
                       const Icon(
                         Icons.chevron_right,
-                        color: ChatConstants.chatDividerColor,
+                        color: AppColors.grey3,
                         size: 16,
                       ),
                     ],

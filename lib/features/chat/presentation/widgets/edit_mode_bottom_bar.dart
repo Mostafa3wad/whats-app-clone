@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:whats_app_clone/features/chat/presentation/constants/chat_constants.dart';
+import 'package:whats_app_clone/config/themes/app_colors.dart';
+import 'package:whats_app_clone/config/themes/text_styles.dart';
 import 'package:whats_app_clone/features/chat/presentation/cubit/chat_cubit.dart';
 
 class EditModeBottomBar extends StatelessWidget {
@@ -59,10 +60,8 @@ class EditModeBottomBar extends StatelessWidget {
       onTap: onTap,
       child: Text(
         label,
-        style: ChatConstants.editModeBottomTextStyle.copyWith(
-          color: isDelete
-              ? ChatConstants.chatDeleteColor
-              : ChatConstants.chatTextColor,
+        style: AppStyles.editModeBottomTextStyle.copyWith(
+          color: isDelete ? AppColors.error : Colors.black,
         ),
       ),
     );

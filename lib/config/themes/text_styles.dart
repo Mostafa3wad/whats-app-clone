@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:whats_app_clone/config/themes/app_colors.dart';
 
 class AppStyles {
   static final TextStyle h3Blod = TextStyle(
@@ -31,7 +32,7 @@ class AppStyles {
 
   static const TextStyle settingsProfileSubtitle = TextStyle(
     fontSize: 14,
-    color: Color(0xFF8E8E93),
+    color: AppColors.secondaryText,
   );
 
   static const TextStyle settingsItemTitle = TextStyle(
@@ -41,11 +42,29 @@ class AppStyles {
 
   static const TextStyle settingsItemSubtitle = TextStyle(
     fontSize: 13,
-    color: Color(0xFF8E8E93),
+    color: AppColors.secondaryText,
   );
 
-  static const TextStyle settingsFooter = TextStyle(
-    fontSize: 13,
-    color: Color(0xFF8E8E93),
+  // Chat text styles
+  static const TextStyle chatNameStyle = TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.w600,
+  );
+
+  static const TextStyle chatMessageStyle = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.normal,
+    color: AppColors.secondaryText,
+  );
+
+  static const TextStyle chatSubHeaderStyle = TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.normal,
+    color: AppColors.brandColor,
+  );
+
+  static const TextStyle editModeBottomTextStyle = TextStyle(
+    fontSize: 17,
+    fontWeight: FontWeight.normal,
   );
 }
