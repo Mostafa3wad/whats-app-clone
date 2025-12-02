@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 class ChatConstants {
   // Colors
-  static const Color chatBackgroundColor = Colors.white;
-  static const Color chatTextColor = Colors.black;
   static const Color chatSecondaryTextColor = Color(0xFF8E8E93);
   static const Color chatDividerColor = Color(0xFFC6C6C8);
   static const Color chatSelectionColor = Color(0xFF007AFF);
@@ -21,7 +19,6 @@ class ChatConstants {
   static const TextStyle chatNameStyle = TextStyle(
     fontSize: 17,
     fontWeight: FontWeight.w600,
-    color: chatTextColor,
   );
 
   static const TextStyle chatMessageStyle = TextStyle(
@@ -45,6 +42,5 @@ class ChatConstants {
   static const TextStyle editModeBottomTextStyle = TextStyle(
     fontSize: 17,
     fontWeight: FontWeight.normal,
-    color: chatTextColor,
   );
 }

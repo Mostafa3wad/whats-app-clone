@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whats_app_clone/features/chat/presentation/constants/chat_constants.dart';
+import 'package:whats_app_clone/config/themes/app_colors.dart';
 
 class ChatSwipeActions extends StatelessWidget {
   final VoidCallback? onMoreTap;
@@ -19,14 +19,14 @@ class ChatSwipeActions extends StatelessWidget {
           _buildActionButton(
             icon: Icons.more_horiz,
             label: 'More',
-            color: ChatConstants.chatMoreColor,
+            color: AppColors.secondaryText,
             onTap: onMoreTap ?? () {},
           ),
           const SizedBox(width: 12),
           _buildActionButton(
             icon: Icons.archive,
             label: 'Archive',
-            color: ChatConstants.chatArchiveColor,
+            color: AppColors.brandColor,
             onTap: onArchiveTap ?? () {},
           ),
         ],

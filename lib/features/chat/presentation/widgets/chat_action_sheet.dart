@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:whats_app_clone/config/themes/app_colors.dart';
-import 'package:whats_app_clone/features/chat/presentation/constants/chat_constants.dart';
 
 class ChatActionSheet extends StatelessWidget {
   final VoidCallback? onMute;
@@ -35,28 +34,28 @@ class ChatActionSheet extends StatelessWidget {
             color: AppColors.brandColor,
             onTap: onMute ?? () {},
           ),
-          const Divider(height: 1, color: ChatConstants.chatDividerColor),
+          const Divider(height: 1, color: AppColors.grey3),
           _buildActionItem(
             label: 'Contact Info',
             color: AppColors.brandColor,
             onTap: onContactInfo ?? () {},
           ),
-          const Divider(height: 1, color: ChatConstants.chatDividerColor),
+          const Divider(height: 1, color: AppColors.grey3),
           _buildActionItem(
             label: 'Export Chat',
             color: AppColors.brandColor,
             onTap: onExportChat ?? () {},
           ),
-          const Divider(height: 1, color: ChatConstants.chatDividerColor),
+          const Divider(height: 1, color: AppColors.grey3),
           _buildActionItem(
             label: 'Clear Chat',
             color: AppColors.brandColor,
             onTap: onClearChat ?? () {},
           ),
-          const Divider(height: 1, color: ChatConstants.chatDividerColor),
+          const Divider(height: 1, color: AppColors.grey3),
           _buildActionItem(
             label: 'Delete Chat',
-            color: ChatConstants.chatDeleteColor,
+            color: AppColors.error,
             onTap: onDeleteChat ?? () {},
           ),
           const SizedBox(height: 8),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whats_app_clone/features/chat/presentation/constants/chat_constants.dart';
+import 'package:whats_app_clone/config/themes/text_styles.dart';
 
 class ChatSubHeader extends StatelessWidget {
   const ChatSubHeader({super.key});
@@ -18,17 +18,14 @@ class ChatSubHeader extends StatelessWidget {
             },
             child: const Text(
               'Broadcast Lists',
-              style: ChatConstants.chatSubHeaderStyle,
+              style: AppStyles.chatSubHeaderStyle,
             ),
           ),
           TextButton(
             onPressed: () {
               // Navigate to new group
             },
-            child: const Text(
-              'New Group',
-              style: ChatConstants.chatSubHeaderStyle,
-            ),
+            child: const Text('New Group', style: AppStyles.chatSubHeaderStyle),
           ),
         ],
       ),
