@@ -7,11 +7,18 @@ import 'package:whats_app_clone/features/home/presentation/pages/home_page.dart'
 import 'package:whats_app_clone/features/login/presentation/cubit/login_cubit.dart';
 import 'package:whats_app_clone/features/login/presentation/pages/login_page.dart';
 import 'package:whats_app_clone/features/login/presentation/pages/otp_page.dart';
+import 'package:whats_app_clone/features/splash/presentation/pages/onboarding_page.dart';
 
 import '../../core/constants/paths/route_names.dart';
 
 Route<dynamic> generateRoutes(RouteSettings settings) {
   switch (settings.name) {
+    // ============ Onboarding ============
+    case RouteNames.onboarding:
+      return CupertinoPageRoute<dynamic>(
+        builder: (BuildContext context) => const OnboardingPage(),
+      );
+
     // ============ Auth ============
     case RouteNames.login:
       return CupertinoPageRoute<dynamic>(

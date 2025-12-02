@@ -4,10 +4,24 @@ import 'package:whats_app_clone/config/themes/app_colors.dart';
 import 'package:whats_app_clone/config/themes/text_styles.dart';
 import 'package:whats_app_clone/core/constants/paths/app_assets.dart';
 import 'package:whats_app_clone/core/constants/paths/route_names.dart';
+import 'package:whats_app_clone/core/helpers/app_storage.dart';
 import 'package:whats_app_clone/features/splash/presentation/widgets/policy_and_terms.dart';
 
 class OnboardingPage extends StatelessWidget {
   const OnboardingPage({super.key});
+
+  Future<void> _completeOnboarding(BuildContext context) async {
+    final AppStorage appStorage = AppStorage();
+    await appStorage.init();
+
+    // Save that user has seen onboarding (Hive)
+    await appStorage.setOnboardingSeen();
+
+    // Navigate to login page
+    if (context.mounted) {
+      Navigator.pushReplacementNamed(context, RouteNames.login);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +40,7 @@ class OnboardingPage extends StatelessWidget {
             ),
             const PolicyAndTerms(),
             GestureDetector(
-              onTap: () => Navigator.pushNamed(context, RouteNames.login),
+              onTap: () => _completeOnboarding(context),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[

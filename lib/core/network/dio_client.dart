@@ -34,15 +34,33 @@ class DioClient {
             },
         onError: (DioException e, ErrorInterceptorHandler handler) async {
           if (e.response?.statusCode == 401) {
-            final FlutterSecureStorage storage = const FlutterSecureStorage();
-            final String? refreshToken = await storage.read(
-              key: LocalDbKeys.refreshToken,
-            );
+            try {
+              // Try to refresh token
+              final bool refreshed = await _refreshToken();
 
-            post(
-              ApiEndpoints.refreshToken,
-              data: <String, dynamic>{'refresh': refreshToken},
-            );
+              if (refreshed) {
+                // Retry the original request with new token
+                final RequestOptions requestOptions = e.requestOptions;
+
+                // Get new token
+                const FlutterSecureStorage storage = FlutterSecureStorage();
+                final String? newToken = await storage.read(
+                  key: LocalDbKeys.accessToken,
+                );
+
+                // Add new token to headers
+                requestOptions.headers['Authorization'] = 'Bearer $newToken';
+
+                // Retry the request
+                final Response<dynamic> response = await _dio.fetch(
+                  requestOptions,
+                );
+                return handler.resolve(response);
+              }
+            } catch (refreshError) {
+              _appLogger.error('Token refresh failed', refreshError, null);
+              // Token refresh failed, user needs to login again
+            }
           }
           _appLogger.info(
             'ERROR[${e.response?.statusCode}] => MESSAGE: ${e.message}',
@@ -115,15 +133,48 @@ class DioClient {
     }
   }
 
-  Future _refreshToken(String refreshToken) async {
+  /// Refresh access token using refresh token
+  /// Returns true if refresh was successful, false otherwise
+  Future<bool> _refreshToken() async {
     try {
+      // Get refresh token from secure storage
+      const FlutterSecureStorage storage = FlutterSecureStorage();
+      final String? refreshToken = await storage.read(
+        key: LocalDbKeys.refreshToken,
+      );
+
+      // Check if refresh token exists
+      if (refreshToken == null || refreshToken.isEmpty) {
+        _appLogger.error('No refresh token found', null, null);
+        return false;
+      }
+
+      // Call refresh token API
       final Response<dynamic> response = await _dio.post(
         ApiEndpoints.refreshToken,
         data: <String, dynamic>{'refresh': refreshToken},
       );
-      return response;
-    } catch (e) {
-      rethrow;
+
+      // Check if refresh was successful
+      if (response.statusCode == 200 && response.data != null) {
+        final String? newAccessToken = response.data['access'] as String?;
+
+        if (newAccessToken != null && newAccessToken.isNotEmpty) {
+          // Save new access token
+          await storage.write(
+            key: LocalDbKeys.accessToken,
+            value: newAccessToken,
+          );
+
+          _appLogger.info('Token refreshed successfully');
+          return true;
+        }
+      }
+
+      return false;
+    } on Exception catch (e) {
+      _appLogger.error('Token refresh error', e);
+      return false;
     }
   }
 }
