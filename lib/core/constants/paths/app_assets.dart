@@ -13,6 +13,7 @@ class AppAssets {
   static const String call = 'assets/icons/call.svg';
   static const String mic = 'assets/icons/mic.svg';
   static const String add = 'assets/icons/add.svg';
+  static const String whatsLogo = 'assets/icons/whats_logo.svg';
 
   static const String chatSelected = 'assets/icons/chat_selected.svg';
   static const String settingSelected = 'assets/icons/settings_selected.svg';

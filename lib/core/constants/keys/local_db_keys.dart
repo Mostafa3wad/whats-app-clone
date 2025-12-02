@@ -3,4 +3,5 @@ class LocalDbKeys {
   static const String onBoardingSeen = 'on-boarding-seen';
   static const String accessToken = 'accessToken';
   static const String refreshToken = 'refreshToken';
+  static const String hasSeenOnboardingKey = 'has_seen_onboarding';
 }

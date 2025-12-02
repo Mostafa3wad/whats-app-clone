@@ -1,13 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:whats_app_clone/config/themes/app_colors.dart';
 import 'package:whats_app_clone/core/constants/paths/route_names.dart';
 import 'package:whats_app_clone/core/extensions/loading_dialog.dart';
 import 'package:whats_app_clone/core/extensions/open_dialog.dart';
-import 'package:whats_app_clone/core/extensions/show_snackbar.dart';
 import 'package:whats_app_clone/features/login/presentation/cubit/login_cubit.dart';
 import 'package:whats_app_clone/features/login/presentation/widgets/otp_rich_text.dart';
 import 'package:whats_app_clone/features/login/presentation/widgets/otp_text_field.dart';
