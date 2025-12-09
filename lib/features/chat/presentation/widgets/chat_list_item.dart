@@ -81,10 +81,7 @@ class ChatListItem extends StatelessWidget {
               Navigator.pushNamed(
                 context,
                 RouteNames.chatDetails,
-                arguments: ChatDetailsArg(
-                  chatId: chat.id,
-                  contactName: chat.name,
-                ),
+                arguments: ChatDetailsArg(chatId: 1, contactName: chat.name),
               );
             }
           },
@@ -192,7 +189,7 @@ class ChatListItem extends StatelessWidget {
         }
 
         return Slidable(
-          key: Key(chat.id),
+          key: Key(chat.id.toString()),
           groupTag: 'chat_list',
           closeOnScroll: false,
           endActionPane: ActionPane(
@@ -206,7 +203,7 @@ class ChatListItem extends StatelessWidget {
                     context,
                     onDeleteChat: () {
                       Navigator.of(context).pop();
-                      context.read<ChatCubit>().archiveChat(chat.id);
+                      context.read<ChatCubit>().archiveChat(chat.id.toString());
                     },
                     onClearChat: () {
                       Navigator.of(context).pop();
@@ -222,7 +219,7 @@ class ChatListItem extends StatelessWidget {
               SlidableAction(
                 onPressed: (BuildContext slidableContext) {
                   Slidable.of(slidableContext)?.close();
-                  context.read<ChatCubit>().archiveChat(chat.id);
+                  context.read<ChatCubit>().archiveChat(chat.id.toString());
                 },
                 backgroundColor: AppColors.secendry,
                 foregroundColor: Colors.white,

@@ -7,7 +7,7 @@ import 'package:whats_app_clone/features/chat/presentation/widgets/chat_details/
 import 'package:whats_app_clone/features/chat/presentation/widgets/chat_details/messages_list.dart';
 
 class ChatDetailsArg {
-  final String chatId;
+  final int chatId;
   final String contactName;
   final String avatarUrl;
 

@@ -12,8 +12,8 @@ class MessageBubble extends StatelessWidget {
   }
 
   Widget _buildStatusIcon() {
-    if (!message.isMe) {
-      const SizedBox.shrink();
+    if (!message.isMine) {
+      return const SizedBox.shrink();
     }
 
     IconData iconData;
@@ -53,24 +53,24 @@ class MessageBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Align(
-      alignment: message.isMe ? Alignment.centerRight : Alignment.centerLeft,
+      alignment: message.isMine ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: EdgeInsets.only(
-          left: message.isMe ? 64 : 8,
-          right: message.isMe ? 8 : 64,
+          left: message.isMine ? 64 : 8,
+          right: message.isMine ? 8 : 64,
           top: 4,
           bottom: 4,
         ),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
-          color: message.isMe
+          color: message.isMine
               ? const Color(0xFF005C4B) // WhatsApp green for sent messages
               : Colors.white,
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(16),
             topRight: const Radius.circular(16),
-            bottomLeft: Radius.circular(message.isMe ? 16 : 4),
-            bottomRight: Radius.circular(message.isMe ? 4 : 16),
+            bottomLeft: Radius.circular(message.isMine ? 16 : 4),
+            bottomRight: Radius.circular(message.isMine ? 4 : 16),
           ),
           boxShadow: <BoxShadow>[
             BoxShadow(
@@ -85,10 +85,10 @@ class MessageBubble extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              message.text,
+              message.content,
               style: TextStyle(
                 fontSize: 15,
-                color: message.isMe ? Colors.white : Colors.black87,
+                color: message.isMine ? Colors.white : Colors.black87,
                 height: 1.4,
               ),
             ),
@@ -97,13 +97,13 @@ class MessageBubble extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(
-                  _formatTime(message.dateTime),
+                  _formatTime(message.timestamp),
                   style: TextStyle(
                     fontSize: 11,
-                    color: message.isMe ? Colors.white70 : Colors.black45,
+                    color: message.isMine ? Colors.white70 : Colors.black45,
                   ),
                 ),
-                if (message.isMe) ...<Widget>[
+                if (message.isMine) ...<Widget>[
                   const SizedBox(width: 4),
                   _buildStatusIcon(),
                 ],

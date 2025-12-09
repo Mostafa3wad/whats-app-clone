@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:whats_app_clone/core/helpers/app_storage.dart';
 import 'package:whats_app_clone/core/logging/app_logger.dart';
 import 'package:whats_app_clone/core/network/dio_client.dart';
 import 'package:whats_app_clone/core/network/network_info.dart';
+import 'package:whats_app_clone/core/network/web_socket_service.dart';
+import 'package:whats_app_clone/features/chat/chat_locator.dart';
 import 'package:whats_app_clone/features/login/login_locatoer.dart';
 
 import '/core/helpers/database_helper.dart';
@@ -23,6 +26,17 @@ void initializeServiceLocator() {
 
   sl.registerLazySingleton<AppLogger>(AppLogger.new);
 
+  // Storage
+  sl.registerLazySingleton<AppStorage>(AppStorage.new);
+
+  // WebSocket Service
+  sl.registerLazySingleton<WebSocketService>(
+    () => WebSocketService(storage: sl()),
+  );
+
   // =============== Login Dependencies ===============
   loginLocator();
+
+  // =============== Chat Dependencies ===============
+  chatLocator();
 }

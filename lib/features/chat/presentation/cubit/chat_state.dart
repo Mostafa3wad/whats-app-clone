@@ -12,18 +12,18 @@ class ChatInitial extends ChatState {}
 class ChatLoaded extends ChatState {
   final List<ChatEntity> chats;
   final bool isEditMode;
-  final Set<String> selectedChatIds;
+  final Set<int> selectedChatIds;
 
   const ChatLoaded({
     required this.chats,
     this.isEditMode = false,
-    this.selectedChatIds = const <String>{},
+    this.selectedChatIds = const <int>{},
   });
 
   ChatLoaded copyWith({
     List<ChatEntity>? chats,
     bool? isEditMode,
-    Set<String>? selectedChatIds,
+    Set<int>? selectedChatIds,
   }) {
     return ChatLoaded(
       chats: chats ?? this.chats,

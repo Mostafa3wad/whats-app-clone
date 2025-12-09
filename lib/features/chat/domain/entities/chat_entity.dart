@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 enum MessageType { text, voice, photo }
 
 class ChatEntity extends Equatable {
-  final String id;
+  final int id;
   final String name;
   final String lastMessage;
   final DateTime timestamp;

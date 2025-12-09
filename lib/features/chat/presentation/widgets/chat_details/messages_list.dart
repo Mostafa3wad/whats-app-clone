@@ -63,8 +63,8 @@ class _MessagesListState extends State<MessagesList> {
       return true;
     }
 
-    final DateTime currentMessageDate = widget.messages[index].dateTime;
-    final DateTime previousMessageDate = widget.messages[index - 1].dateTime;
+    final DateTime currentMessageDate = widget.messages[index].timestamp;
+    final DateTime previousMessageDate = widget.messages[index - 1].timestamp;
 
     return currentMessageDate.day != previousMessageDate.day ||
         currentMessageDate.month != previousMessageDate.month ||
@@ -103,7 +103,7 @@ class _MessagesListState extends State<MessagesList> {
                     ],
                   ),
                   child: Text(
-                    _formatDate(message.dateTime),
+                    _formatDate(message.timestamp),
                     style: const TextStyle(
                       fontSize: 12,
                       color: Colors.black54,

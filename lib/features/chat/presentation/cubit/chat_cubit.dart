@@ -12,7 +12,7 @@ class ChatCubit extends Cubit<ChatState> {
   void _loadDummyChats() {
     final List<ChatEntity> chats = <ChatEntity>[
       ChatEntity(
-        id: '1',
+        id: 1,
         name: 'Martin Randolph',
         lastMessage: 'Yes, 2pm is awesome',
         timestamp: DateTime(2019, 11, 19),
@@ -21,7 +21,7 @@ class ChatCubit extends Cubit<ChatState> {
         isRead: true,
       ),
       ChatEntity(
-        id: '2',
+        id: 2,
         name: 'Andrew Parker',
         lastMessage: 'What kind of strategy is better?',
         timestamp: DateTime(2019, 11, 16),
@@ -30,7 +30,7 @@ class ChatCubit extends Cubit<ChatState> {
         isRead: true,
       ),
       ChatEntity(
-        id: '3',
+        id: 3,
         name: 'Karen Castillo',
         lastMessage: '0:14',
         timestamp: DateTime(2019, 11, 15),
@@ -39,7 +39,7 @@ class ChatCubit extends Cubit<ChatState> {
         voiceDuration: '0:14',
       ),
       ChatEntity(
-        id: '4',
+        id: 4,
         name: 'Maximillian Jacobson',
         lastMessage: 'Bro, I have a good idea!',
         timestamp: DateTime(2019, 10, 30),
@@ -48,7 +48,7 @@ class ChatCubit extends Cubit<ChatState> {
         isRead: true,
       ),
       ChatEntity(
-        id: '5',
+        id: 5,
         name: 'Martha Craig',
         lastMessage: 'Photo',
         timestamp: DateTime(2019, 10, 28),
@@ -56,7 +56,7 @@ class ChatCubit extends Cubit<ChatState> {
         messageType: MessageType.photo,
       ),
       ChatEntity(
-        id: '6',
+        id: 6,
         name: 'Tabitha Potter',
         lastMessage:
             'Actually I wanted to check with you about your online business plan on our...',
@@ -65,7 +65,7 @@ class ChatCubit extends Cubit<ChatState> {
         messageType: MessageType.text,
       ),
       ChatEntity(
-        id: '7',
+        id: 7,
         name: 'Maisy Humphrey',
         lastMessage: 'Welcome, to make design process faster, look at Pixsellz',
         timestamp: DateTime(2019, 8, 20),
@@ -74,7 +74,7 @@ class ChatCubit extends Cubit<ChatState> {
         isRead: true,
       ),
       ChatEntity(
-        id: '8',
+        id: 8,
         name: 'Kieron Dotson',
         lastMessage: 'Ok, have a good trip!',
         timestamp: DateTime(2019, 7, 29),
@@ -94,19 +94,17 @@ class ChatCubit extends Cubit<ChatState> {
         currentState.copyWith(
           isEditMode: !currentState.isEditMode,
           selectedChatIds: currentState.isEditMode
-              ? <String>{}
+              ? <int>{}
               : currentState.selectedChatIds,
         ),
       );
     }
   }
 
-  void toggleChatSelection(String chatId) {
+  void toggleChatSelection(int chatId) {
     if (state is ChatLoaded) {
       final ChatLoaded currentState = state as ChatLoaded;
-      final Set<String> selectedIds = Set<String>.from(
-        currentState.selectedChatIds,
-      );
+      final Set<int> selectedIds = Set<int>.from(currentState.selectedChatIds);
       if (selectedIds.contains(chatId)) {
         selectedIds.remove(chatId);
       } else {
@@ -132,7 +130,7 @@ class ChatCubit extends Cubit<ChatState> {
   void clearSelection() {
     if (state is ChatLoaded) {
       final ChatLoaded currentState = state as ChatLoaded;
-      emit(currentState.copyWith(selectedChatIds: <String>{}));
+      emit(currentState.copyWith(selectedChatIds: <int>{}));
     }
   }
 
@@ -158,7 +156,7 @@ class ChatCubit extends Cubit<ChatState> {
       emit(
         currentState.copyWith(
           chats: updatedChats,
-          selectedChatIds: <String>{},
+          selectedChatIds: <int>{},
           isEditMode: false,
         ),
       );
@@ -177,7 +175,7 @@ class ChatCubit extends Cubit<ChatState> {
       emit(
         currentState.copyWith(
           chats: updatedChats,
-          selectedChatIds: <String>{},
+          selectedChatIds: <int>{},
           isEditMode: false,
         ),
       );

@@ -1,136 +1,307 @@
+import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:whats_app_clone/features/chat/domain/entities/message_entity.dart';
+import 'package:whats_app_clone/features/chat/domain/usecases/connect_to_chat_usecase.dart';
+import 'package:whats_app_clone/features/chat/domain/usecases/disconnect_from_chat_usecase.dart';
+import 'package:whats_app_clone/features/chat/domain/usecases/listen_to_messages_usecase.dart';
+import 'package:whats_app_clone/features/chat/domain/usecases/send_message_usecase.dart';
+import 'package:whats_app_clone/features/chat/domain/usecases/update_message_usecase.dart';
+import 'package:whats_app_clone/features/chat/domain/usecases/delete_message_usecase.dart';
+import 'package:whats_app_clone/features/chat/domain/usecases/start_typing_usecase.dart';
+import 'package:whats_app_clone/features/chat/domain/usecases/stop_typing_usecase.dart';
 
 part 'chat_details_state.dart';
 
 class ChatDetailsCubit extends Cubit<ChatDetailsState> {
-  final String chatId;
+  final int chatId;
   final String contactName;
+  final ConnectToChatUsecase connectToChatUsecase;
+  final DisconnectFromChatUsecase disconnectFromChatUsecase;
+  final ListenToMessagesUsecase listenToMessagesUsecase;
+  final SendMessageUsecase sendMessageUsecase;
+  final UpdateMessageUsecase updateMessageUsecase;
+  final DeleteMessageUsecase deleteMessageUsecase;
+  final StartTypingUsecase startTypingUsecase;
+  final StopTypingUsecase stopTypingUsecase;
 
-  ChatDetailsCubit({required this.chatId, required this.contactName})
-    : super(ChatDetailsInitial()) {
-    _loadDummyMessages();
+  StreamSubscription<void>? _messageSubscription;
+
+  ChatDetailsCubit({
+    required this.chatId,
+    required this.contactName,
+    required this.connectToChatUsecase,
+    required this.disconnectFromChatUsecase,
+    required this.listenToMessagesUsecase,
+    required this.sendMessageUsecase,
+    required this.updateMessageUsecase,
+    required this.deleteMessageUsecase,
+    required this.startTypingUsecase,
+    required this.stopTypingUsecase,
+  }) : super(ChatDetailsInitial()) {
+    _initialize();
   }
 
-  void _loadDummyMessages() {
-    final DateTime now = DateTime.now();
-    final List<MessageEntity> messages = <MessageEntity>[
-      MessageEntity(
-        id: '1',
-        text: 'Hey! How are you doing?',
-        isMe: false,
-        dateTime: now.subtract(const Duration(hours: 2)),
-        status: MessageStatus.read,
-      ),
-      MessageEntity(
-        id: '2',
-        text: 'I\'m doing great! Thanks for asking 😊',
-        isMe: true,
-        dateTime: now.subtract(const Duration(hours: 1, minutes: 58)),
-        status: MessageStatus.read,
-      ),
-      MessageEntity(
-        id: '3',
-        text: 'Do you know what time is it?',
-        isMe: false,
-        dateTime: now.subtract(const Duration(hours: 1, minutes: 45)),
-        status: MessageStatus.read,
-      ),
-      MessageEntity(
-        id: '4',
-        text: 'It\'s morning in Tokyo 😄',
-        isMe: true,
-        dateTime: now.subtract(const Duration(hours: 1, minutes: 40)),
-        status: MessageStatus.read,
-      ),
-      MessageEntity(
-        id: '5',
-        text: 'What is the most popular meal in Japan?',
-        isMe: false,
-        dateTime: now.subtract(const Duration(hours: 1, minutes: 35)),
-        status: MessageStatus.read,
-      ),
-      MessageEntity(
-        id: '6',
-        text: 'Do you like it?',
-        isMe: false,
-        dateTime: now.subtract(const Duration(hours: 1, minutes: 34)),
-        status: MessageStatus.read,
-      ),
-      MessageEntity(
-        id: '7',
-        text: 'I think top two are: Sushi and Ramen! 🍜',
-        isMe: true,
-        dateTime: now.subtract(const Duration(hours: 1, minutes: 30)),
-        status: MessageStatus.read,
-      ),
-      MessageEntity(
-        id: '8',
-        text: 'Good morning!',
-        isMe: true,
-        dateTime: now.subtract(const Duration(minutes: 45)),
-        status: MessageStatus.read,
-      ),
-      MessageEntity(
-        id: '9',
-        text: 'Japan looks amazing!',
-        isMe: true,
-        dateTime: now.subtract(const Duration(minutes: 40)),
-        status: MessageStatus.read,
-      ),
-      MessageEntity(
-        id: '10',
-        text: 'Good bye!',
-        isMe: true,
-        dateTime: now.subtract(const Duration(minutes: 10)),
-        status: MessageStatus.read,
-      ),
-    ];
+  Future<void> _initialize() async {
+    emit(ChatDetailsLoading());
 
-    emit(
-      ChatDetailsLoaded(messages: messages, isOnline: true, lastSeen: 'online'),
+    // Connect to chat WebSocket
+    final connectResult = await connectToChatUsecase(chatId: chatId);
+
+    connectResult.fold(
+      (failure) {
+        emit(ChatDetailsError(message: failure.message!));
+      },
+      (_) {
+        // Start listening to messages
+        _listenToMessages();
+        emit(const ChatDetailsLoaded(messages: [], isOnline: false));
+      },
     );
   }
 
-  void sendMessage(String text) {
+  void _listenToMessages() {
+    _messageSubscription = listenToMessagesUsecase(chatId: chatId).listen(
+      (either) {
+        either.fold(
+          (failure) {
+            // Handle error - could show a snackbar or update state
+            if (state is ChatDetailsLoaded) {
+              final currentState = state as ChatDetailsLoaded;
+              emit(currentState.copyWith(errorMessage: failure.message));
+            }
+          },
+          (message) {
+            if (state is ChatDetailsLoaded) {
+              final currentState = state as ChatDetailsLoaded;
+
+              // Check if message already exists (to avoid duplicates)
+              final messageExists = currentState.messages.any(
+                (m) => m.id == message.id,
+              );
+
+              if (!messageExists) {
+                final updatedMessages = [...currentState.messages, message];
+                emit(
+                  currentState.copyWith(
+                    messages: updatedMessages,
+                    errorMessage: null,
+                  ),
+                );
+              } else {
+                // Update existing message (for status updates, edits, etc.)
+                final updatedMessages = currentState.messages.map((m) {
+                  return m.id == message.id ? message : m;
+                }).toList();
+
+                emit(
+                  currentState.copyWith(
+                    messages: updatedMessages,
+                    errorMessage: null,
+                  ),
+                );
+              }
+            }
+          },
+        );
+      },
+      onError: (error) {
+        if (state is ChatDetailsLoaded) {
+          final currentState = state as ChatDetailsLoaded;
+          emit(
+            currentState.copyWith(
+              errorMessage: 'Connection error: ${error.toString()}',
+            ),
+          );
+        }
+      },
+    );
+  }
+
+  Future<void> sendMessage(String text) async {
     if (text.trim().isEmpty) {
       return;
     }
 
-    if (state is ChatDetailsLoaded) {
-      final ChatDetailsLoaded currentState = state as ChatDetailsLoaded;
-      final String messageId = DateTime.now().millisecondsSinceEpoch.toString();
-
-      final MessageEntity newMessage = MessageEntity(
-        id: messageId,
-        text: text.trim(),
-        isMe: true,
-        dateTime: DateTime.now(),
-      );
-
-      final List<MessageEntity> updatedMessages = <MessageEntity>[
-        ...currentState.messages,
-        newMessage,
-      ];
-
-      emit(currentState.copyWith(messages: updatedMessages));
+    if (state is! ChatDetailsLoaded) {
+      return;
     }
+
+    final currentState = state as ChatDetailsLoaded;
+
+    // Create optimistic message with temporary ID
+    final tempId = -DateTime.now().millisecondsSinceEpoch;
+    final optimisticMessage = MessageEntity(
+      id: tempId,
+      chatId: chatId,
+      senderId: 0, // Current user ID - should be from auth
+      content: text.trim(),
+      messageType: 'text',
+      timestamp: DateTime.now(),
+      isMine: true,
+      status: MessageStatus.sending,
+    );
+
+    // Add optimistic message to UI immediately
+    final updatedMessages = [...currentState.messages, optimisticMessage];
+    emit(currentState.copyWith(messages: updatedMessages));
+
+    // Send message to server
+    final result = await sendMessageUsecase(
+      chatId: chatId,
+      content: text.trim(),
+      messageType: 'text',
+    );
+
+    result.fold(
+      (failure) {
+        // Mark message as failed
+        final failedMessages = updatedMessages.map((m) {
+          if (m.id == tempId) {
+            return m.copyWith(status: MessageStatus.failed);
+          }
+          return m;
+        }).toList();
+
+        emit(
+          currentState.copyWith(
+            messages: failedMessages,
+            errorMessage: 'Failed to send message: ${failure.message}',
+          ),
+        );
+      },
+      (_) {
+        // Message sent successfully
+        // The real message will come through the WebSocket stream
+        // We'll keep the optimistic message until the real one arrives
+        final sentMessages = updatedMessages.map((m) {
+          if (m.id == tempId) {
+            return m.copyWith(status: MessageStatus.sent);
+          }
+          return m;
+        }).toList();
+
+        emit(currentState.copyWith(messages: sentMessages, errorMessage: null));
+      },
+    );
+  }
+
+  Future<void> updateMessage({
+    required int messageId,
+    required String newContent,
+  }) async {
+    if (state is! ChatDetailsLoaded) {
+      return;
+    }
+
+    final currentState = state as ChatDetailsLoaded;
+
+    // Optimistically update the message
+    final updatedMessages = currentState.messages.map((m) {
+      if (m.id == messageId) {
+        return m.copyWith(content: newContent);
+      }
+      return m;
+    }).toList();
+
+    emit(currentState.copyWith(messages: updatedMessages));
+
+    // Send update to server
+    final result = await updateMessageUsecase(
+      messageId: messageId,
+      newContent: newContent,
+    );
+
+    result.fold(
+      (failure) {
+        // Revert on failure
+        emit(
+          currentState.copyWith(
+            errorMessage: 'Failed to update message: ${failure.message}',
+          ),
+        );
+      },
+      (_) {
+        // Success - the updated message will come through WebSocket
+        emit(currentState.copyWith(errorMessage: null));
+      },
+    );
+  }
+
+  Future<void> deleteMessage(int messageId) async {
+    if (state is! ChatDetailsLoaded) {
+      return;
+    }
+
+    final currentState = state as ChatDetailsLoaded;
+
+    // Optimistically remove the message
+    final originalMessages = currentState.messages;
+    final updatedMessages = currentState.messages
+        .where((m) => m.id != messageId)
+        .toList();
+
+    emit(currentState.copyWith(messages: updatedMessages));
+
+    // Send delete to server
+    final result = await deleteMessageUsecase(messageId: messageId);
+
+    result.fold(
+      (failure) {
+        // Revert on failure
+        emit(
+          currentState.copyWith(
+            messages: originalMessages,
+            errorMessage: 'Failed to delete message: ${failure.message}',
+          ),
+        );
+      },
+      (_) {
+        // Success
+        emit(currentState.copyWith(errorMessage: null));
+      },
+    );
+  }
+
+  Future<void> startTyping() async {
+    await startTypingUsecase(chatId: chatId);
+  }
+
+  Future<void> stopTyping() async {
+    await stopTypingUsecase(chatId: chatId);
   }
 
   void markMessagesAsRead() {
-    if (state is ChatDetailsLoaded) {
-      final ChatDetailsLoaded currentState = state as ChatDetailsLoaded;
-      final List<MessageEntity> updatedMessages = currentState.messages.map((
-        MessageEntity message,
-      ) {
-        if (!message.isMe && message.status != MessageStatus.read) {
-          return message.copyWith(status: MessageStatus.read);
-        }
-        return message;
-      }).toList();
-
-      emit(currentState.copyWith(messages: updatedMessages));
+    if (state is! ChatDetailsLoaded) {
+      return;
     }
+
+    final currentState = state as ChatDetailsLoaded;
+    final updatedMessages = currentState.messages.map((message) {
+      if (!message.isMine && message.status != MessageStatus.read) {
+        return message.copyWith(status: MessageStatus.read);
+      }
+      return message;
+    }).toList();
+
+    emit(currentState.copyWith(messages: updatedMessages));
+  }
+
+  void clearError() {
+    if (state is ChatDetailsLoaded) {
+      final currentState = state as ChatDetailsLoaded;
+      emit(currentState.copyWith(errorMessage: null));
+    }
+  }
+
+  @override
+  Future<void> close() async {
+    // Cancel message subscription
+    await _messageSubscription?.cancel();
+
+    // Disconnect from chat
+    await disconnectFromChatUsecase(chatId: chatId);
+
+    return super.close();
   }
 }
